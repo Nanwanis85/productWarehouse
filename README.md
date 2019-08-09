@@ -11,7 +11,8 @@ PRODUCT WAREHOUSE MANAGEMENT:
 1.Warehouse.cmd is the file which needs to be run which will automate the build and run the spring boot application with the interactive console
 
 # SYSTEM INTERACTION:
-1. All commands are supported as provided in the TaskEngineer.pdf , please refer the same while interacting with system
+1. All commands are supported as provided in the TaskEngineer.pdf , please refer the same while interacting with system 
+2. You can also know the commands by typing help once console sceen comes up as I have used Spring Shell
 
 
 
