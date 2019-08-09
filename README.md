@@ -3,7 +3,8 @@ PRODUCT WAREHOUSE MANAGEMENT:
 
 # Prerequisite:
 1. Maven and Java is required with Path set in Environment Variables.
-2. Have Database created in MYSQL: productwarehouse
+2. Have Database created in MYSQL: productwarehouse with username as root and password(keep it empty) or either update the username and password in application.properties
+
 
 
 # HOW TO RUN:(Its inside ProuctWareHouseManagement)
