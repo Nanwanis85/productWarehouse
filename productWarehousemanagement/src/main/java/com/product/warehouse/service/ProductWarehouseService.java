@@ -20,9 +20,8 @@ public class ProductWarehouseService {
 	private ProductRecieptWarehouseService productRecieptWarehouseService;
 	
 	public int addProduct(Product product) throws ProductWarehouseException {
-		Product productDb = productRepository.save(product);
 		ProductWareHouseReciept productReciept = new ProductWareHouseReciept();
-		productReciept.setProduct(productDb);
+		productReciept.setProduct(product);
 		ProductWareHouseReciept wareHouseReciept= productRecieptWarehouseService.generateReciept(productReciept);
 		return wareHouseReciept.getRack().getSlotNo();
 	}
@@ -33,6 +32,10 @@ public class ProductWarehouseService {
 	
 	public Product searchProductByCode(String productCodeId) {
 		return productRepository.findByProductCode(productCodeId);
+	}
+	
+	public void saveProduct(Product product) {
+		productRepository.save(product);
 	}
 	
 

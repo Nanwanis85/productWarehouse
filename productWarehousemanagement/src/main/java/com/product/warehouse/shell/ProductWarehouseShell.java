@@ -42,7 +42,9 @@ public class ProductWarehouseShell {
     
     @ShellMethod("Add Product to the warehouse")
     public String store(String productCode, String productColor) throws ProductWarehouseException {
-    	Product product = new Product(productCode, productColor);
+    	Product product = new Product();
+    	product.setProductCode(productCode);
+    	product.setProductColor(productColor);
     	int slotNo = productWarehouseService.addProduct(product);
     	return "Allocated Slot number "+slotNo;
     }
@@ -56,23 +58,37 @@ public class ProductWarehouseShell {
     @ShellMethod("Status of the warehouse")
     public void status() {
     	List<ProductWareHouseReciept> recieptList = productRecieptWarehouseService.getAllReciepts();
-    	System.out.println("SlotNO  Product_Code   Color");
+    	System.out.println("SlotNO\t\tProduct_Code   \t\tColor");
     	for (ProductWareHouseReciept productWareHouseReciept : recieptList) {
-    		System.out.print(productWareHouseReciept.getRack().getSlotNo()+"\t\t"+productWareHouseReciept.getProduct().getProductCode()+"\t\t\t\t"+productWareHouseReciept.getProduct().getProductColor());
+    		System.out.print(productWareHouseReciept.getRack().getSlotNo()+"\t\t"+productWareHouseReciept.getProduct().getProductCode()+"\t\t"+productWareHouseReciept.getProduct().getProductColor());
     		System.out.println();
     	}
     												
     }
     
     @ShellMethod("Search Product with particular color from the warehouse")
-    public String product_codes_for_products_with_colour(String colorName) {
-    	List<Integer> sloNotList = productRecieptWarehouseService.searchProductsSlotNoByColor(colorName);
-    	return sloNotList.stream().map(number -> String.valueOf(number)).collect(Collectors.toList()).toString();
+    public String slot_numbers_for_products_with_colour(String colorName) {
+    	List<ProductWareHouseReciept> recieptList =  productRecieptWarehouseService.searchProductsSlotNoByColor(colorName);
+    	List<String> slotNoList = new ArrayList<>();
+    	for (ProductWareHouseReciept productWareHouseReciept : recieptList) {
+    		slotNoList.add(Integer.toString(productWareHouseReciept.getRack().getSlotNo()));
+		}
+    	return slotNoList.toString();
     }
     
     @ShellMethod("search product using code")
     public int slot_number_for_product_code(String productCode) {
     	int slotNo = productRecieptWarehouseService.searchProductByCode(productCode);
     	return slotNo;
+    }
+    
+    @ShellMethod("Search Product with particular color from the warehouse")
+    public String product_codes_for_products_with_colour(String colorName) {
+    	List<ProductWareHouseReciept> recieptList =  productRecieptWarehouseService.searchProductsSlotNoByColor(colorName);
+    	List<String> slotNoList = new ArrayList<>();
+    	for (ProductWareHouseReciept productWareHouseReciept : recieptList) {
+    		slotNoList.add(productWareHouseReciept.getProduct().getProductCode());
+		}
+    	return slotNoList.toString();
     }
 }

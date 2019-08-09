@@ -41,15 +41,4 @@ public class ProductRecieptWarehouseController {
 		return ResponseEntity.ok(slotNo);
 	}
 	
-	@ApiOperation(value = "Search Product", notes = "Search All Products Slot using Color from WareHouse", response = ResponseEntity.class)
-	@ GetMapping(path="/search/allproductslot/bycolor",consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	@ApiResponses(value= {
-			@ApiResponse(code=200, message="Created", response=ResponseEntity.class),
-			@ApiResponse(code=500, message="Internal Server Error"),
-			@ApiResponse(code=422, message="Validation Error")
-	})
-	public ResponseEntity<List<Integer>> searchProductSlotByColor(String colorName){
-		return ResponseEntity.ok(productRecieptWarehouseService.searchProductsSlotNoByColor(colorName));
-	}
-
 }

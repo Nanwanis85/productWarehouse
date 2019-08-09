@@ -21,10 +21,15 @@ public class ProductRecieptWarehouseService {
 	@Autowired
 	RackWarehouseService rackWareHouseService;
 	
+	@Autowired
+	ProductWarehouseService productWarehouseService;
+	
+	
 	public ProductWareHouseReciept generateReciept(ProductWareHouseReciept productReciept) throws ProductWarehouseException {
 		List<Rack> rackList = rackWareHouseService.getEmptyRacks();
 		ProductWareHouseReciept productWareHouseReciept;
 		if(!CollectionUtils.isEmpty(rackList)) {
+			productWarehouseService.saveProduct(productReciept.getProduct());
 			Rack rack = rackList.get(0);
 			rack.setOccupied(true);
 			rackWareHouseService.addRack(rack);
@@ -41,13 +46,9 @@ public class ProductRecieptWarehouseService {
 		return wareHouseReciept.getRack().getSlotNo();
 	}
 	
-	public List<Integer> searchProductsSlotNoByColor(String colorName) {
-		List<Integer> productSlotNoList = new ArrayList<>();
-		List<ProductWareHouseReciept> wareHouseReciept = productWareHouseRecieptRepository.findAllByProductProductColor(colorName);
-		for (ProductWareHouseReciept productWareHouseReciept : wareHouseReciept) {
-			productSlotNoList.add(productWareHouseReciept.getRack().getSlotNo());
-		}
-		return productSlotNoList;
+	public List<ProductWareHouseReciept> searchProductsSlotNoByColor(String colorName) {
+		return productWareHouseRecieptRepository.findAllByProductProductColor(colorName);
+		
 	}
 	
 	public List<ProductWareHouseReciept> getAllReciepts(){
